@@ -8,13 +8,16 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class="dropdown {{ setSidebarActive(['admin.dashboard']) }}">
+            {{-- <li class="dropdown {{ setSidebarActive(['admin.dashboard']) }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fa fa-fire"></i><span>Dashboard</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setSidebarActive(['admin.dashboard']) }}">
                         <a class="nav-link" href="{{ route('admin.dashboard') }}">Main Dashboard</a>
                     </li>
                 </ul>
+            </li> --}}
+            <li class="dropdown {{ setSidebarActive(['admin.dashboard']) }}">
+                <a href="{{ route('admin.dashboard') }}" class="nav-link"><i class="fa fa-fire"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Starter</li>
             <li class="dropdown">

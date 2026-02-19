@@ -19,7 +19,8 @@
     <ul class="navbar-nav navbar-right">
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1" />
+                <img alt="image" src="{{ asset( admin()->avatar) }}" class="rounded-circle mr-1" />
+
                 <div class="d-sm-none d-lg-inline-block">
                     Hi, {{ admin()->name }}
                 </div>
@@ -34,7 +35,8 @@
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
                     <a href="javascript:;" onclick="event.preventDefault(); this.closest('form').submit();"
-                        class="dropdown-item has-icon text-danger"><i class="fas fa-sign-out-alt"></i>{{ __('Logout') }}</a>
+                        class="dropdown-item has-icon text-danger"><i
+                            class="fas fa-sign-out-alt"></i>{{ __('Logout') }}</a>
                 </form>
             </div>
         </li>

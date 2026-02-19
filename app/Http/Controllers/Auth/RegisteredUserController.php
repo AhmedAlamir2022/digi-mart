@@ -45,6 +45,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        notyf()->info('Welcome!');
+
         return redirect(route('dashboard', absolute: false));
     }
 }
