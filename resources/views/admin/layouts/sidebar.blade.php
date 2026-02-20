@@ -8,18 +8,38 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            {{-- <li class="dropdown {{ setSidebarActive(['admin.dashboard']) }}">
-                <a href="#" class="nav-link has-dropdown"><i class="fa fa-fire"></i><span>Dashboard</span></a>
-                <ul class="dropdown-menu">
-                    <li class="{{ setSidebarActive(['admin.dashboard']) }}">
-                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Main Dashboard</a>
-                    </li>
-                </ul>
-            </li> --}}
             <li class="dropdown {{ setSidebarActive(['admin.dashboard']) }}">
-                <a href="{{ route('admin.dashboard') }}" class="nav-link"><i class="fa fa-fire"></i><span>Dashboard</span></a>
+                <a href="{{ route('admin.dashboard') }}" class="nav-link"><i
+                        class="fa fa-fire"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Starter</li>
+            @if (canAccess(['access management']))
+                @php
+                    $accessActive = setSidebarActive(['admin.role-users.index', 'admin.roles.index']);
+                @endphp
+
+                <li class="dropdown {{ $accessActive }}">
+                    <a href="#" class="nav-link has-dropdown">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Access Management</span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li class="{{ setSidebarActive(['admin.role-users.index']) }}">
+                            <a class="nav-link" href="{{ route('admin.role-users.index') }}">
+                                Role Users
+                            </a>
+                        </li>
+
+                        <li class="{{ setSidebarActive(['admin.roles.index']) }}">
+                            <a class="nav-link" href="{{ route('admin.roles.index') }}">
+                                Role & Permissions
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Layout</span></a>
