@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RoleUserController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -49,4 +50,16 @@ Route::middleware('auth:admin')->prefix('admin')->as('admin.')->group(function (
 
     /** Role User Routes */
     Route::resource('role-users', RoleUserController::class);
+
+    /** Settings Route */
+    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::put('general-settings', [SettingController::class, 'updateGeneralSetting'])->name('settings.general.update');
+    Route::get('commission-settings', [SettingController::class, 'commissionSetting'])->name('settings.commission.index');
+    Route::put('commission-settings', [SettingController::class, 'updateCommissionSetting'])->name('settings.commission.update');
+
+    Route::get('logo-settings', [SettingController::class, 'logoSetting'])->name('settings.logo.index');
+    Route::put('logo-settings', [SettingController::class, 'updateLogoSetting'])->name('settings.logo.update');
+
+    Route::get('smtp-settings', [SettingController::class, 'smtpSetting'])->name('settings.smtp.index');
+    Route::put('smtp-settings', [SettingController::class, 'updateSmtpSetting'])->name('settings.smtp.update');
 });

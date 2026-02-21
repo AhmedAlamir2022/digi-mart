@@ -187,6 +187,9 @@
         });
     </script>
 
+    <!-- Image Preview Script -->
+    @stack('scripts')
+
 
 </body>
 
