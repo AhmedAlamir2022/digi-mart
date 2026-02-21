@@ -37,6 +37,7 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/assets/css/components.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 </head>
 
 <body class="layout-4">
@@ -112,6 +113,19 @@
     <!-- Template JS File -->
     <script src="{{ asset('admin/js/scripts.js') }}"></script>
     <script src="{{ asset('admin/js/custom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script>
+        var notyf = new Notyf({
+            duration: 5000,
+            dismissible: true
+        });
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                notyf.error("{{ $error }}");
+            @endforeach
+        @endif
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

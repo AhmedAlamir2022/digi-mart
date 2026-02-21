@@ -43,21 +43,15 @@
                                         <!-- Name -->
                                         <div class="col-md-6 mb-4">
                                             <label class="fw-semibold">Full Name</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                            <input type="text" class="form-control"
                                                 name="name" value="{{ old('name', $admin->name) }}" required>
-                                            @error('name')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
                                         </div>
 
                                         <!-- Email -->
                                         <div class="col-md-6 mb-4">
                                             <label class="fw-semibold">Email Address</label>
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                            <input type="email" class="form-control"
                                                 name="email" value="{{ old('email', $admin->email) }}" required>
-                                            @error('email')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
                                         </div>
 
                                         <!-- Password -->
@@ -67,11 +61,8 @@
                                                 <small class="text-muted">(Leave blank if not changing)</small>
                                             </label>
                                             <input type="password"
-                                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                                class="form-control" name="password"
                                                 placeholder="Enter new password">
-                                            @error('password')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
                                         </div>
 
                                         <!-- Confirm Password -->
@@ -85,7 +76,7 @@
                                         <div class="col-md-12 mb-4">
                                             <label class="fw-semibold">Assign Role</label>
                                             <select name="role"
-                                                class="form-control select2 @error('role') is-invalid @enderror">
+                                                class="form-control select2>
 
                                                 @foreach ($roles as $role)
                                                     <option value="{{ $role->name }}"
@@ -94,10 +85,6 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-
-                                            @error('role')
-                                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                                            @enderror
                                         </div>
 
                                     </div>

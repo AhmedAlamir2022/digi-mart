@@ -27,7 +27,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title">Logged in 5 min ago</div>
-                <a href="" class="dropdown-item has-icon"><i class="far fa-user"></i>
+                <a href="{{ route('admin.profile.index') }}" class="dropdown-item has-icon"><i class="far fa-user"></i>
                     Profile</a>
                 <a href="" class="dropdown-item has-icon"><i class="fas fa-cog"></i>
                     Settings</a>

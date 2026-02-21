@@ -15,7 +15,7 @@
             <li class="menu-header">Starter</li>
             @if (canAccess(['access management']))
                 @php
-                    $accessActive = setSidebarActive(['admin.role-users.index', 'admin.roles.index']);
+                    $accessActive = setSidebarActive(['admin.role-users.*', 'admin.roles.*']);
                 @endphp
 
                 <li class="dropdown {{ $accessActive }}">
