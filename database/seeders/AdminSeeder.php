@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
         $admin = new Admin();
         $admin->name = 'Super Admin';
         $admin->email = 'admin@gmail.com';
-        $admin->password = bcrypt('password');
+        $admin->password = bcrypt('admin');
         $admin->save();
         // $admin->assignRole('super admin');
 
@@ -26,7 +26,7 @@ class AdminSeeder extends Seeder
         $reviewer = new Admin();
         $reviewer->name = 'Reviewer';
         $reviewer->email = 'reviewer@gmail.com';
-        $reviewer->password = bcrypt('password');
+        $reviewer->password = bcrypt('reviewer');
         $reviewer->save();
         // $reviewer->assignRole('reviewer');
     }

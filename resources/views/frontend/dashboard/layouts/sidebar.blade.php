@@ -18,14 +18,14 @@
                     <span class="text">Dashboard</span>
                 </a>
             </li>
-            {{-- <li class="sidebar-list__item">
+            <li class="sidebar-list__item">
                 <a href="{{ route('profile') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="ti ti-user"></i>
                     </span>
                     <span class="text">Profile</span>
                 </a>
-            </li> --}}
+            </li>
             {{-- @if (isAuthor())
                 <li class="sidebar-list__item">
                     <a href="{{ route('user.items.index') }}" class="sidebar-list__link">

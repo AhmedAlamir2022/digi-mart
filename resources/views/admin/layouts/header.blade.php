@@ -45,7 +45,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
-                    <a href="" class="dropdown-item">{{ __('Profile') }}</a>
+                    <a href="{{ route('admin.profile.index') }}" class="dropdown-item">{{ __('Profile') }}</a>
                     <div class="dropdown-divider"></div>
                     <a href="" class="dropdown-item">{{ __('Settings') }}</a>
                     <form method="POST" action="{{ route('admin.logout') }}">
