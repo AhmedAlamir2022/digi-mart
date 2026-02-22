@@ -28,6 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        notyf()->info('Welcome back!');
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -41,6 +43,8 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        notyf()->info('You have been logged out.');
 
         return redirect('/');
     }
