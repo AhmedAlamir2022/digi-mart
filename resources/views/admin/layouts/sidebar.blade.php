@@ -110,6 +110,52 @@
                         </div>
                     </li>
                 @endif
+                {{-- Divider --}}
+                {{-- <li class="nav-item mt-auto">
+                    <hr class="dropdown-divider">
+                </li> --}}
+
+                {{-- Profile --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ setSidebarActive(['admin.profile.index']) }}"
+                        href="{{ route('admin.profile.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-user sidebar-icon"></i>
+                        </span>
+                        <span class="nav-link-title">
+                            Profile
+                        </span>
+                    </a>
+                </li>
+
+                {{-- Settings --}}
+                <li class="nav-item">
+                    <a class="nav-link {{ setSidebarActive(['admin.settings.*']) }}"
+                        href="{{ route('admin.settings.index') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <i class="ti ti-settings sidebar-icon"></i>
+                        </span>
+                        <span class="nav-link-title">
+                            Settings
+                        </span>
+                    </a>
+                </li>
+
+                {{-- Logout --}}
+                <li class="nav-item">
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                        @csrf
+                        <a href="javascript:;" onclick="event.preventDefault(); this.closest('form').submit();"
+                            class="nav-link text-danger">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <i class="ti ti-logout sidebar-icon"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                Logout
+                            </span>
+                        </a>
+                    </form>
+                </li>
 
             </ul>
         </div>

@@ -47,7 +47,7 @@
 
                     <a href="{{ route('admin.profile.index') }}" class="dropdown-item">{{ __('Profile') }}</a>
                     <div class="dropdown-divider"></div>
-                    <a href="" class="dropdown-item">{{ __('Settings') }}</a>
+                    <a href="{{ route('admin.settings.index') }}" class="dropdown-item">{{ __('Settings') }}</a>
                     <form method="POST" action="{{ route('admin.logout') }}">
                         @csrf
                         <a href="javascript:;" onclick="event.preventDefault(); this.closest('form').submit();"
