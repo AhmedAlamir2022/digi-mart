@@ -1,9 +1,12 @@
-{{-- @php
-    $categories = App\Models\Category::with('subCategories')->where('show_at_nav', 1)->get();
-    $cartCount = App\Models\CartItem::where('user_id', user()?->id)->count();
-    $banner = App\Models\FlashSaleBanner::first();
-    $customPages = App\Models\CustomPage::where(['status' => 1, 'show_at_nav' => 1])->get();
-@endphp --}}
+@php
+    $categories = App\Models\Category::with('subCategories')
+        ->withCount('subCategories')
+        ->where('show_at_nav', 1)
+        ->get();
+    // $cartCount = App\Models\CartItem::where('user_id', user()?->id)->count();
+    // $banner = App\Models\FlashSaleBanner::first();
+    // $customPages = App\Models\CustomPage::where(['status' => 1, 'show_at_nav' => 1])->get();
+@endphp
 <!-- ============================ Sale Offer Start =========================== -->
 {{-- @if ($banner?->status == 1)
     <div class="sale-offer ">
@@ -99,23 +102,28 @@
 <section class="category_menu_area d-none d-lg-block">
     <div class="container container-full">
         <ul class="category_menu">
-            {{-- @foreach ($categories as $category)
-                <li class="category_menu_list {{ $category->subCategories->count() > 0 ? 'has-submenu' : '' }}">
-                    <a class="category_menu_link"
-                        href="{{ route('products', ['category' => $category->slug]) }}">{{ $category->name }}</a>
-                    @if ($category->subCategories->count() > 0)
+            @foreach ($categories as $category)
+                <li class="category_menu_list {{ $category->sub_categories_count > 0 ? 'has-submenu' : '' }}">
+                    <a class="category_menu_link" href="{{ route('products', ['category' => $category->slug]) }}">
+                        {{ $category->name }}
+                    </a>
+                    @if ($category->sub_categories_count > 0)
                         <ul class="nav-submenu">
                             @foreach ($category->subCategories as $subCategory)
                                 <li class="nav-submenu__item">
-                                    <a href="{{ route('products', ['category' => $category->slug, 'sub-category' => $subCategory->slug]) }}"
-                                        class="nav-submenu__link">{{ $subCategory->name }}</a>
+                                    <a href="{{ route('products', [
+                                        'category' => $category->slug,
+                                        'sub-category' => $subCategory->slug,
+                                    ]) }}"
+                                        class="nav-submenu__link">
+                                        {{ $subCategory->name }}
+                                    </a>
                                 </li>
                             @endforeach
                         </ul>
                     @endif
                 </li>
-            @endforeach --}}
-
+            @endforeach
         </ul>
     </div>
 </section>

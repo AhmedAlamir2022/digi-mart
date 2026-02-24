@@ -73,6 +73,44 @@
                         </span>
                     </a>
                 </li>
+                @php
+                    $accessActive =
+                        request()->routeIs('admin.categories.*') || request()->routeIs('admin.sub-categories.*');
+                @endphp
+                @if (canAccess(['show all categories', 'show all sub-categories']))
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ $accessActive ? 'active show' : '' }}"
+                            href="#navbar-layout" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                            aria-expanded="true">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/layout-2 -->
+                                <i class="ti ti-list sidebar-icon"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                {{ __('Manage Categories') }}
+                            </span>
+                        </a>
+                        <div class="dropdown-menu {{ $accessActive ? 'show' : '' }}">
+                            <div class="dropdown-menu-columns">
+                                <div class="dropdown-menu-column">
+                                    @can('show all categories')
+                                        <a class="dropdown-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}"
+                                            href="{{ route('admin.categories.index') }}">
+                                            {{ __('Main Categories') }}
+                                        </a>
+                                    @endcan
+
+                                    @can('show all sub-categories')
+                                        <a class="dropdown-item {{ request()->routeIs('admin.sub-categories.*') ? 'active' : '' }}"
+                                            href="{{ route('admin.sub-categories.index') }}">
+                                            {{ __('Sub Categories') }}
+                                        </a>
+                                    @endcan
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endif
 
                 @php
                     $accessActive = request()->routeIs('admin.role-users.*') || request()->routeIs('admin.roles.*');
@@ -116,7 +154,7 @@
                     $kycActive = request()->routeIs('admin.kyc.*') || request()->routeIs('admin.kyc-settings.*');
                 @endphp
 
-                @if (canAccess(['mange kyc']))
+                @if (canAccess(['kyc settings', 'show kyc requests']))
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {{ $kycActive ? 'active show' : '' }}" href="#"
                             data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
@@ -128,15 +166,21 @@
                         </a>
 
                         <div class="dropdown-menu {{ $kycActive ? 'show' : '' }}">
-                            <a class="dropdown-item {{ request()->routeIs('admin.kyc.index') ? 'active' : '' }}"
-                                href="{{ route('admin.kyc.index') }}">
-                                KYC Requests
-                            </a>
 
-                            <a class="dropdown-item {{ request()->routeIs('admin.kyc-settings.*') ? 'active' : '' }}"
-                                href="{{ route('admin.kyc-settings.index') }}">
-                                KYC Settings
-                            </a>
+                            @can('show kyc requests')
+                                <a class="dropdown-item {{ request()->routeIs('admin.kyc.index') ? 'active' : '' }}"
+                                    href="{{ route('admin.kyc.index') }}">
+                                    KYC Requests <span
+                                        class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">{{ pendingKycCount() }}</span>
+                                </a>
+                            @endcan
+
+                            @can('kyc settings')
+                                <a class="dropdown-item {{ request()->routeIs('admin.kyc-settings.*') ? 'active' : '' }}"
+                                    href="{{ route('admin.kyc-settings.index') }}">
+                                    KYC Settings
+                                </a>
+                            @endcan
                         </div>
                     </li>
                 @endif

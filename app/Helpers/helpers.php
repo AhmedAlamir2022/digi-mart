@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\KycVerification;
 use Illuminate\Support\Facades\Auth;
 
 /** get logged in admin */
@@ -71,9 +72,9 @@ if (! function_exists('formatDate')) {
 }
 
 /** get pending kyc count */
-// if(!function_exists('pendingKycCount')) {
-//     function pendingKycCount() : int
-//     {
-//         return KycVerification::whereStatus('pending')->count();
-//     }
-// }
+if(!function_exists('pendingKycCount')) {
+    function pendingKycCount() : int
+    {
+        return KycVerification::whereStatus('pending')->count();
+    }
+}

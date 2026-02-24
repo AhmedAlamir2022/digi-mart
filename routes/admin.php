@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\KycController;
 use App\Http\Controllers\Admin\KYCSettingController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -59,6 +61,12 @@ Route::middleware('auth:admin')->prefix('admin')->as('admin.')->group(function (
     Route::get('kyc-download-document/{kyc}/{attachment_id}', [KycController::class, 'downloadDocument'])->name('kyc.download-document');
     Route::put('kyc-status/{kyc}', [KycController::class, 'updateStatus'])->name('kyc.status');
     Route::resource('kyc', KycController::class);
+
+    /** Categories Routes */
+    Route::resource('categories', CategoryController::class);
+
+    /** Sub Categories Routes */
+    Route::resource('sub-categories', SubCategoryController::class);
 
     /** Settings Route */
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');

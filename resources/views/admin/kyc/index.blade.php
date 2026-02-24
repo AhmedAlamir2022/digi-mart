@@ -83,19 +83,24 @@
                                             <td class="text-end">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     <!-- زر عرض التفاصيل -->
-                                                    <a href="{{ route('admin.kyc.show', $request->id) }}"
-                                                        class="btn btn-sm btn-outline-primary" title="View KYC">
-                                                        <i class="ti ti-eye"></i>
-                                                    </a>
-
-                                                    <!-- زر تحميل المستند -->
-                                                    @foreach (json_decode($request->documents) as $index => $document)
-                                                        <a href="{{ route('admin.kyc.download-document', ['kyc' => $request->id, 'attachment_id' => $index]) }}"
-                                                            class="btn btn-sm btn-outline-primary"
-                                                            title="Download Document {{ $index + 1 }}">
-                                                            <i class="ti ti-download"></i>
+                                                    @can('update kyc request')
+                                                        <a href="{{ route('admin.kyc.show', $request->id) }}"
+                                                            class="btn btn-sm btn-outline-primary" title="View KYC">
+                                                            <i class="ti ti-eye"></i>
                                                         </a>
-                                                    @endforeach
+                                                    @endcan
+
+
+                                                    @can('download kyc file')
+                                                        <!-- زر تحميل المستند -->
+                                                        @foreach (json_decode($request->documents) as $index => $document)
+                                                            <a href="{{ route('admin.kyc.download-document', ['kyc' => $request->id, 'attachment_id' => $index]) }}"
+                                                                class="btn btn-sm btn-outline-primary"
+                                                                title="Download Document {{ $index + 1 }}">
+                                                                <i class="ti ti-download"></i>
+                                                            </a>
+                                                        @endforeach
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\Storage;
 
 class KycController extends Controller implements HasMiddleware
 {
-    static function Middleware() : array
+    static function Middleware(): array
     {
         return [
-            new Middleware('permission:manage kyc')
+            new Middleware('permission:show kyc requests', only: ['index']),
+            new Middleware('permission:update kyc request', only: ['show', 'updateStatus']),
+            new Middleware('permission:download kyc file', only: ['downloadDocument']),
         ];
     }
 
@@ -42,20 +44,20 @@ class KycController extends Controller implements HasMiddleware
     {
         $kyc = KycVerification::findOrFail($id);
         $attachmentPath = null;
-        foreach(json_decode($kyc->documents) as $key => $value) {
-            if($key == $index) {
+        foreach (json_decode($kyc->documents) as $key => $value) {
+            if ($key == $index) {
                 $attachmentPath = $value;
             }
         }
 
-        if(Storage::exists($attachmentPath)) {
+        if (Storage::exists($attachmentPath)) {
             return Storage::download($attachmentPath);
         }
 
         abort(404);
     }
 
-    function updateStatus(Request $request, KycVerification $kyc) : RedirectResponse
+    function updateStatus(Request $request, KycVerification $kyc): RedirectResponse
     {
         $request->validate([
             'status' => ['required', 'in:pending,approved,rejected'],
@@ -66,7 +68,7 @@ class KycController extends Controller implements HasMiddleware
         $kyc->reject_reason = $request->reason;
         $kyc->save();
 
-        if($kyc->status == 'approved') {
+        if ($kyc->status == 'approved') {
             User::findOrFail($kyc->user_id)?->update(['kyc_status' => 1, 'user_type' => 'author']);
             MailSenderService::sendMail(
                 name: $kyc->user->name,
@@ -74,7 +76,7 @@ class KycController extends Controller implements HasMiddleware
                 subject: __('Your KYC has been approved'),
                 content: __('We are happy to inform you that your KYC has been approved.'),
             );
-        }elseif($kyc->status == 'rejected') {
+        } elseif ($kyc->status == 'rejected') {
             User::findOrFail($kyc->user_id)?->update(['kyc_status' => 0, 'user_type' => 'user']);
             MailSenderService::sendMail(
                 name: $kyc->user->name,
@@ -82,8 +84,7 @@ class KycController extends Controller implements HasMiddleware
                 subject: __('Your KYC has been rejected'),
                 content: $kyc->reject_reason ?? __('We are sorry to inform you that your KYC has been rejected.'),
             );
-        }
-        else {
+        } else {
             User::findOrFail($kyc->user_id)?->update(['kyc_status' => 0]);
         }
 

@@ -15,7 +15,7 @@ class KYCSettingController extends Controller implements HasMiddleware
     static function Middleware() : array
     {
         return [
-            new Middleware('permission:manage kyc')
+            new Middleware('permission:kyc settings')
         ];
     }
 
