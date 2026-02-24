@@ -69,3 +69,11 @@ if (! function_exists('formatDate')) {
         return date($format, strtotime($date));
     }
 }
+
+/** get pending kyc count */
+// if(!function_exists('pendingKycCount')) {
+//     function pendingKycCount() : int
+//     {
+//         return KycVerification::whereStatus('pending')->count();
+//     }
+// }

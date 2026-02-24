@@ -54,10 +54,10 @@
                         <li class="nav-menu__item">
                             <a href="{{ route('page', $page->slug) }}" class="nav-menu__link">{{ $page->name }}</a>
                         </li>
-                    @endforeach
+                    @endforeach --}}
                     <li class="nav-menu__item">
                         <a href="{{ route('kyc.index') }}" class="nav-menu__link">Start Selling</a>
-                    </li> --}}
+                    </li>
                 </ul>
             </div>
             <!-- Menu End  -->

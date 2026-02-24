@@ -74,32 +74,34 @@
                     </a>
                 </li>
 
+                @php
+                    $accessActive = request()->routeIs('admin.role-users.*') || request()->routeIs('admin.roles.*');
+                @endphp
                 @if (canAccess(['show roles', 'user roles']))
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ setSidebarActive(['admin.role-users.*', 'admin.roles.*']) == 'active' ? 'show' : '' }}"
+                        <a class="nav-link dropdown-toggle {{ $accessActive ? 'active show' : '' }}"
                             href="#access-management" data-bs-toggle="dropdown" data-bs-auto-close="false"
-                            role="button"
-                            aria-expanded="{{ setSidebarActive(['admin.role-users.*', 'admin.roles.*']) == 'active' ? 'true' : 'false' }}">
+                            role="button" aria-expanded="{{ $accessActive ? 'true' : 'false' }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <i class="ti ti-shield-cog sidebar-icon"></i>
                             </span>
-                            <span class="nav-link-title">Access Management</span>
+                            <span class="nav-link-title">
+                                Access Management
+                            </span>
                         </a>
-
-                        <div
-                            class="dropdown-menu {{ setSidebarActive(['admin.role-users.*', 'admin.roles.*']) == 'active' ? 'show' : '' }}">
+                        <div class="dropdown-menu {{ $accessActive ? 'show' : '' }}">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
 
                                     @can('show user roles')
-                                        <a class="dropdown-item {{ setSidebarActive(['admin.role-users.index']) }}"
+                                        <a class="dropdown-item {{ request()->routeIs('admin.role-users.*') ? 'active' : '' }}"
                                             href="{{ route('admin.role-users.index') }}">
                                             Role Users
                                         </a>
                                     @endcan
 
                                     @can('show roles')
-                                        <a class="dropdown-item {{ setSidebarActive(['admin.roles.index']) }}"
+                                        <a class="dropdown-item {{ request()->routeIs('admin.roles.*') ? 'active' : '' }}"
                                             href="{{ route('admin.roles.index') }}">
                                             Role & Permissions
                                         </a>
@@ -110,10 +112,34 @@
                         </div>
                     </li>
                 @endif
-                {{-- Divider --}}
-                {{-- <li class="nav-item mt-auto">
-                    <hr class="dropdown-divider">
-                </li> --}}
+                @php
+                    $kycActive = request()->routeIs('admin.kyc.*') || request()->routeIs('admin.kyc-settings.*');
+                @endphp
+
+                @if (canAccess(['mange kyc']))
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ $kycActive ? 'active show' : '' }}" href="#"
+                            data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                            aria-expanded="{{ $kycActive ? 'true' : 'false' }}">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <i class="ti ti-user-scan sidebar-icon"></i>
+                            </span>
+                            <span class="nav-link-title">KYC</span>
+                        </a>
+
+                        <div class="dropdown-menu {{ $kycActive ? 'show' : '' }}">
+                            <a class="dropdown-item {{ request()->routeIs('admin.kyc.index') ? 'active' : '' }}"
+                                href="{{ route('admin.kyc.index') }}">
+                                KYC Requests
+                            </a>
+
+                            <a class="dropdown-item {{ request()->routeIs('admin.kyc-settings.*') ? 'active' : '' }}"
+                                href="{{ route('admin.kyc-settings.index') }}">
+                                KYC Settings
+                            </a>
+                        </div>
+                    </li>
+                @endif
 
                 {{-- Profile --}}
                 <li class="nav-item">
