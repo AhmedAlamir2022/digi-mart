@@ -1,61 +1,55 @@
-"user strict"
+"use strict";
 
-// Notyf init
 var notyf = new Notyf();
 
-$(function() {
+$(document).on("click", ".add-cart", function (e) {
+    e.preventDefault();
 
-    /** add to cart */
-    $('.add-cart').on('click', function(e) {
-        e.preventDefault();
-        const id = $(this).data('id');
+    const id = $(this).data("id");
+    const csrfToken = $('meta[name="csrf-token"]').attr("content");
 
-        $.ajax({
-            method: 'POST',
-            url: route('cart.store', id),
-            data: {
-                _token: csrfToken
-            },
-            beforeSend: function() {
-                $(`#cart-btn-${id}`).text('Adding...');
-            },
-
-            success: function(data) {
-                if(data.status == 'success') {
-                    $('#cart-count').text(data.cart_count);
-                    notyf.success(data.message);
-                    $(`#cart-btn-${id}`).text('Add to cart');
-                }
-            },
-            error: function(xhr, status, error) {
-                let errorMessage = xhr.responseJSON.message;
-                $(`#cart-btn-${id}`).text('Add to cart');
-
-                notyf.error(errorMessage);
+    $.ajax({
+        method: "POST",
+        url: `/add-cart/${id}`,
+        data: {
+            _token: csrfToken,
+        },
+        beforeSend: function () {
+            $(`#cart-btn-${id}`).text("Adding...");
+        },
+        success: function (data) {
+            if (data.status == "success") {
+                $("#cart-count").text(data.cart_count);
+                notyf.success(data.message);
+                $(`#cart-btn-${id}`).text("Add to cart");
             }
-        })
-    })
-
-    /** remove cart item */
-    $('.cart-item-remove').on('click', function(e) {
-        e.preventDefault();
-        const id = $(this).data('id');
-
-        $.ajax({
-            method: 'DELETE',
-            url: route('cart.destroy', id),
-            data: {
-                _token: csrfToken
-            },
-
-            success: function(data) {
-                if(data.status == 'success') {
-                    window.location.reload();
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
-            }
-        })
+        },
+        error: function (xhr) {
+            $(`#cart-btn-${id}`).text("Add to cart");
+            notyf.error(xhr.responseJSON?.message ?? "Something went wrong");
+        },
     });
-})
+});
+
+/** remove cart item */
+$(".cart-item-remove").on("click", function (e) {
+    e.preventDefault();
+    const id = $(this).data("id");
+
+    $.ajax({
+        method: "DELETE",
+        url: `/delete-cart/${id}`,
+        data: {
+            _token: csrfToken,
+        },
+
+        success: function (data) {
+            if (data.status == "success") {
+                window.location.reload();
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        },
+    });
+});

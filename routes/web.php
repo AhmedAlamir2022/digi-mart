@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\KycVerificationController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\User\CartItemController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ItemController;
 use App\Http\Controllers\User\ProfileController;
@@ -22,6 +23,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     /** Kyc Routes */
     Route::get('kyc', [KycVerificationController::class, 'index'])->name('kyc.index')->middleware('kyc');
     Route::post('kyc', [KycVerificationController::class, 'store'])->name('kyc.store')->middleware('kyc');
+
+    /** Cart Routes */
+    Route::get('cart', [CartItemController::class, 'index'])->name('cart.index');
+    Route::post('add-cart/{id}', [CartItemController::class, 'store'])->name('cart.store');
+    Route::delete('delete-cart/{id}', [CartItemController::class, 'destroy'])->name('cart.destroy');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {

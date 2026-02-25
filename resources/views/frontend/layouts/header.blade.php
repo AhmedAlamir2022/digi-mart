@@ -3,7 +3,7 @@
         ->withCount('subCategories')
         ->where('show_at_nav', 1)
         ->get();
-    // $cartCount = App\Models\CartItem::where('user_id', user()?->id)->count();
+    $cartCount = App\Models\CartItem::where('user_id', user()?->id)->count();
     // $banner = App\Models\FlashSaleBanner::first();
     // $customPages = App\Models\CustomPage::where(['status' => 1, 'show_at_nav' => 1])->get();
 @endphp
@@ -67,10 +67,10 @@
 
             <!-- Header Right start -->
             <div class="header-right flx-align">
-                {{-- <a href="{{ route('cart.index') }}" class="header-right__button cart-btn position-relative">
+                <a href="{{ route('cart.index') }}" class="header-right__button cart-btn position-relative">
                     <i class="ti ti-basket"></i>
                     <span class="qty-badge font-12" id="cart-count">{{ $cartCount }}</span>
-                </a> --}}
+                </a>
 
                 <div class="header-right__inner gap-3 flx-align d-lg-flex d-none">
                     <div class="dropdown">

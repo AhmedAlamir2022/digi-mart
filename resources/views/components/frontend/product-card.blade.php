@@ -111,7 +111,6 @@
         transform: translateX(2px);
         /* حركة بسيطة جذابة */
     }
-    
 </style>
 <div class="col-lg-6 col-xl-4 col-sm-6">
     <div class="product-item {{ $product->preview_type == 'video' ? 'product-video' : '' }}">
