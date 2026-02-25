@@ -58,7 +58,22 @@ class ItemController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('frontend.dashboard.item.index', compact('categories', 'items'));
+        // 📊 Dashboard Stats (for all items by this author)
+        $allItemsCount = Item::where('author_id', user()->id)->count();
+        $approvedCount = Item::where('author_id', user()->id)->where('status', 'approved')->count();
+        $pendingCount = Item::where('author_id', user()->id)->where('status', 'pending')->count();
+        $rejectedCount = Item::where('author_id', user()->id)
+            ->whereIn('status', ['hard_rejected', 'soft_rejected'])
+            ->count();
+
+        return view('frontend.dashboard.item.index', compact(
+            'categories',
+            'items',
+            'allItemsCount',
+            'approvedCount',
+            'pendingCount',
+            'rejectedCount'
+        ));
     }
 
     function create(Request $request)
@@ -285,17 +300,20 @@ class ItemController extends Controller
         return response()->json(['status' => 'success', 'redirect' => route('user.items.index')], 200);
     }
 
-    function itemDownload(string $id)
+    public function itemDownload(string $id)
     {
-        $item = Item::where('id', $id)->where('author_id', user()->id)->firstOrFail();
+        $item = Item::findOrFail($id);
 
-        $filePath = public_path($item->main_file); // public/uploads/items/filename
+
+        $filePath = public_path('uploads/items/' . basename($item->main_file));
 
         if (file_exists($filePath)) {
-            return response()->download($filePath);
+
+            return response()->download($filePath, basename($item->main_file));
         }
 
-        abort(404, 'File not found');
+        notyf()->error('File not exist in server.');
+        return redirect()->back();
     }
 
     function itemChangeLog(string $id)

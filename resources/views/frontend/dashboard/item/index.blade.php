@@ -69,28 +69,30 @@
 
         <!-- Stats -->
         <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="card dashboard-card p-3">
-                    <small>Total Items</small>
-                    <h4>{{ $items->count() }}</h4>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <div class="card dashboard-card p-3">
+                        <small>Total Items</small>
+                        <h4>{{ $allItemsCount }}</h4>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card dashboard-card p-3">
-                    <small>Approved</small>
-                    <h4>{{ $items->where('status', 'approved')->count() }}</h4>
+                <div class="col-md-3">
+                    <div class="card dashboard-card p-3">
+                        <small>Approved</small>
+                        <h4>{{ $approvedCount }}</h4>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card dashboard-card p-3">
-                    <small>Pending</small>
-                    <h4>{{ $items->where('status', 'pending')->count() }}</h4>
+                <div class="col-md-3">
+                    <div class="card dashboard-card p-3">
+                        <small>Pending</small>
+                        <h4>{{ $pendingCount }}</h4>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card dashboard-card p-3">
-                    <small>Rejected</small>
-                    <h4>{{ $items->whereIn('status', ['hard_rejected', 'soft_rejected'])->count() }}</h4>
+                <div class="col-md-3">
+                    <div class="card dashboard-card p-3">
+                        <small>Rejected</small>
+                        <h4>{{ $rejectedCount }}</h4>
+                    </div>
                 </div>
             </div>
         </div>
@@ -227,8 +229,8 @@
                                 <div class="d-flex gap-2">
                                     @if (in_array($item->status, ['approved', 'soft_rejected']))
                                         <a href="{{ route('user.items.edit', $item->id) }}" class="text-primary">
-                                        <i class="ti ti-edit me-1"></i>
-                                    </a>
+                                            <i class="ti ti-edit me-1"></i>
+                                        </a>
                                     @endif
 
                                     <a href="{{ route('user.items.destroy', $item->id) }}" class="delete-item text-danger">

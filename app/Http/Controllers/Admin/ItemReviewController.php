@@ -224,12 +224,15 @@ class ItemReviewController extends Controller implements HasMiddleware
     {
         $item = Item::findOrFail($id);
 
-        $filePath = public_path($item->main_file); // public/uploads/items/filename
+        
+        $filePath = public_path('uploads/items/' . basename($item->main_file));
 
         if (file_exists($filePath)) {
-            return response()->download($filePath);
+
+            return response()->download($filePath, basename($item->main_file));
         }
 
-        abort(404, 'File not found');
+        notyf()->error('File not exist in server.');
+        return redirect()->back();
     }
 }
