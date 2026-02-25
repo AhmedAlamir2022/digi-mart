@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Title -->
     <title>@yield('title') -- {{ config('settings.site_name') }}</title>
     <!-- Favicon -->
@@ -33,6 +34,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Main css -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/main.css') }}">
+
 
     @stack('styles')
 
@@ -201,8 +203,7 @@
                                 <div class="user-profile">
                                     <button class="user-profile__button flex-align">
                                         <span class="user-profile__thumb">
-                                            <img src="{{ asset(user()->avatar) }}" class=""
-                                                alt="">
+                                            <img src="{{ asset(user()->avatar) }}" class="" alt="">
                                         </span>
                                     </button>
                                     <ul class="user-profile-dropdown">
@@ -298,6 +299,8 @@
     <!-- dashboard js -->
     <script src="{{ asset('assets/frontend/js/default/dashboard.js') }}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script>
         var notyf = new Notyf({
@@ -310,6 +313,51 @@
                 notyf.error("{{ $error }}");
             @endforeach
         @endif
+
+        'use strict';
+
+        const csrf = $('meta[name=csrf-token]').attr('content');
+        var notyf = new Notyf();
+
+        $(document).on('click', '.delete-item', function(e) {
+            e.preventDefault();
+
+            let url = $(this).attr('href');
+            let row = $(this).closest('tr'); // الجدول اللي فيه العنصر
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        data: {
+                            _token: csrf
+                        },
+                        success: function(res) {
+                            if (res.status === 'success') {
+                                notyf.success(res.message);
+                                row.fadeOut(500, function() {
+                                    $(this).remove();
+                                });
+                            } else {
+                                notyf.error(res.message);
+                            }
+                        },
+                        error: function(xhr) {
+                            notyf.error(xhr.responseJSON?.message || 'Unexpected error!');
+                        }
+                    });
+                }
+            });
+        });
     </script>
 
     @stack('scripts')

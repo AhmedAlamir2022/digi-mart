@@ -11,13 +11,14 @@
         <!-- Sidebar List Start -->
         <ul class="sidebar-list">
             <li class="sidebar-list__item">
-                <a href="{{ route('dashboard') }}" class="sidebar-list__link">
+                <a href="{{ route('dashboard') }}" class="sidebar-list__link ">
                     <span class="sidebar-list__icon">
                         <i class="ti ti-device-heart-monitor"></i>
                     </span>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+
             <li class="sidebar-list__item">
                 <a href="{{ route('profile') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
@@ -26,16 +27,18 @@
                     <span class="text">Profile</span>
                 </a>
             </li>
-            {{-- @if (isAuthor())
+
+            @if (isAuthor())
                 <li class="sidebar-list__item">
-                    <a href="{{ route('user.items.index') }}" class="sidebar-list__link">
+                    <a href="{{ route('user.items.index') }}"
+                        class="sidebar-list__link ">
                         <span class="sidebar-list__icon">
                             <i class="ti ti-clipboard-list"></i>
                         </span>
                         <span class="text">My Items</span>
                     </a>
                 </li>
-            @endif --}}
+            @endif
             {{-- <li class="sidebar-list__item">
                 <a href="{{ route('orders.index') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">

@@ -22,7 +22,21 @@ class RolePermissionSeeder extends Seeder
 
         // 1️⃣ إنشاء Permissions أولًا
         $permissions = [
-            ['review products', 'Review Products'],
+            ['show all pending items', 'Pending Items'],
+            ['show pending item info', 'Pending Items'],
+            ['download pending item', 'Pending Items'],
+            ['show all resubmitted items', 'Resubmitted Items'],
+            ['show resubmitted item info', 'Resubmitted Items'],
+            ['download resubmitted item', 'Resubmitted Items'],
+            ['show all soft-rejected items', 'Soft Rejected Items'],
+            ['show soft-rejected item info', 'Soft Rejected Items'],
+            ['download soft-rejected item', 'Soft Rejected Items'],
+            ['show all hard-rejected items', 'Hard Rejected Items'],
+            ['show hard-rejected item info', 'Hard Rejected Items'],
+            ['download hard-rejected item', 'Hard Rejected Items'],
+            ['show all approved items', 'Approved Items'],
+            ['show approved item info', 'Approved Items'],
+            ['download approved item', 'Approved Items'],
             ['show all categories', 'Category Module'],
             ['add new category', 'Category Module'],
             ['edit category', 'Category Module'],
@@ -74,7 +88,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // 3️⃣ إعطاء Permissions
-        $reviewer->givePermissionTo('review products');
+        $reviewer->givePermissionTo('show all approved items');
 
         $superAdmin->syncPermissions(Permission::where('guard_name', 'admin')->get());
 

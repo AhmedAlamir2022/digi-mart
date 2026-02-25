@@ -113,6 +113,90 @@
                 @endif
 
                 @php
+                    $accessActive =
+                        request()->routeIs('admin.item-reviews.pending.index') ||
+                        request()->routeIs('admin.item-reviews.resubmitted.*') ||
+                        request()->routeIs('admin.item-reviews.softrejected.*') ||
+                        request()->routeIs('admin.item-reviews.hardrejected.*') ||
+                        request()->routeIs('admin.item-reviews.approved.*');
+                @endphp
+
+                @if (canAccess([
+                        'show all pending items',
+                        'show all resubmitted items',
+                        'show all soft-rejected items',
+                        'show all hard-rejected items',
+                        'show all approved items',
+                    ]))
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ $accessActive ? 'active show' : '' }}"
+                            href="#product-review" data-bs-toggle="dropdown" data-bs-auto-close="false"
+                            role="button" aria-expanded="{{ $accessActive ? 'true' : 'false' }}">
+
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <i class="ti ti-basket-bolt sidebar-icon"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                Product Review
+                            </span>
+                        </a>
+
+                        <div class="dropdown-menu {{ $accessActive ? 'show' : '' }}">
+                            <div class="dropdown-menu-columns">
+                                <div class="dropdown-menu-column">
+
+                                    @can('show all pending items')
+                                        <a class="dropdown-item {{ request()->routeIs('admin.item-reviews.pending.index') ? 'active' : '' }}"
+                                            href="{{ route('admin.item-reviews.pending.index') }}">
+                                            Pending
+                                            <span
+                                                class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">{{ getItemStatusCount('pending') }}</span>
+                                        </a>
+                                    @endcan
+
+                                    @can('show all approved items')
+                                        <a class="dropdown-item {{ request()->routeIs('admin.item-reviews.approved.index') ? 'active' : '' }}"
+                                            href="{{ route('admin.item-reviews.approved.index') }}">
+                                            Approved
+                                            <span
+                                                class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">{{ getItemStatusCount('approved') }}</span>
+                                        </a>
+                                    @endcan
+
+                                    @can('show all resubmitted items')
+                                        <a class="dropdown-item {{ request()->routeIs('admin.item-reviews.resubmitted.index') ? 'active' : '' }}"
+                                            href="{{ route('admin.item-reviews.resubmitted.index') }}">
+                                            Resubmitted
+                                            <span
+                                                class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">{{ getItemStatusCount('resubmitted') }}</span>
+                                        </a>
+                                    @endcan
+
+                                    @can('show all soft-rejected items')
+                                        <a class="dropdown-item {{ request()->routeIs('admin.item-reviews.softrejected.index') ? 'active' : '' }}"
+                                            href="{{ route('admin.item-reviews.softrejected.index') }}">
+                                            Soft Rejected
+                                            <span
+                                                class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">{{ getItemStatusCount('soft_rejected') }}</span>
+                                        </a>
+                                    @endcan
+
+                                    @can('show all hard-rejected items')
+                                        <a class="dropdown-item {{ request()->routeIs('admin.item-reviews.hardrejected.index') ? 'active' : '' }}"
+                                            href="{{ route('admin.item-reviews.hardrejected.index') }}">
+                                            Hard Rejected
+                                            <span
+                                                class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">{{ getItemStatusCount('hard_rejected') }}</span>
+                                        </a>
+                                    @endcan
+
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endif
+
+                @php
                     $accessActive = request()->routeIs('admin.role-users.*') || request()->routeIs('admin.roles.*');
                 @endphp
                 @if (canAccess(['show roles', 'user roles']))

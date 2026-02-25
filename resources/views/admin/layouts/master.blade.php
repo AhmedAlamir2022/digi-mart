@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf" content="{{ csrf_token() }}">
     <title>@yield('title') -- {{ config('settings.site_name') }}</title>
-
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ asset(config('settings.favicon')) }}">
     <!-- Libs CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.21.0/tabler-icons.min.css"
         integrity="sha512-XrgoTBs7P5YtpkeKqKOKkruURsawIaRrhe8QrcWeMnFeyRZiOcRNjBAX+AQeXOvx9/9fSY32dVct1PccRoCICQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -54,7 +54,6 @@
     <!-- Libs JS -->
     <script src="{{ asset('assets/admin/js/jquery.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="{{ asset('assets/admin/js/bootstrap-tagsinput.min.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/select2.min.js') }}"></script>
 

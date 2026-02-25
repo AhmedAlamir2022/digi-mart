@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ItemReviewController;
 use App\Http\Controllers\Admin\KycController;
 use App\Http\Controllers\Admin\KYCSettingController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -67,6 +68,16 @@ Route::middleware('auth:admin')->prefix('admin')->as('admin.')->group(function (
 
     /** Sub Categories Routes */
     Route::resource('sub-categories', SubCategoryController::class);
+
+    /** item review routes */
+    Route::get('item-reviews/pending', [ItemReviewController::class, 'pendingIndex'])->name('item-reviews.pending.index');
+    Route::get('item-reviews/approve', [ItemReviewController::class, 'approveIndex'])->name('item-reviews.approved.index');
+    Route::get('item-reviews/hard-rejected', [ItemReviewController::class, 'hardRejectedIndex'])->name('item-reviews.hardrejected.index');
+    Route::get('item-reviews/soft-rejected', [ItemReviewController::class, 'softRejectedIndex'])->name('item-reviews.softrejected.index');
+    Route::get('item-reviews/resubmitted', [ItemReviewController::class, 'resubmittedIndex'])->name('item-reviews.resubmitted.index');
+    Route::get('item-reviews/{id}/show', [ItemReviewController::class, 'show'])->name('item-reviews.show');
+    Route::post('item-reviews/{id}/status', [ItemReviewController::class, 'updateStatus'])->name('item-reviews.status');
+    Route::get('item/{id}/download', [ItemReviewController::class, 'itemDownload'])->name('item.download');
 
     /** Settings Route */
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
