@@ -269,6 +269,49 @@
                     </li>
                 @endif
 
+                @if (canAccess(['show all orders']))
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ setSidebarActive(['admin.orders.index', 'admin.kyc-settings.index']) == 'active' ? 'show' : '' }}"
+                            href="#navbar-layout" data-bs-toggle="dropdown" data-bs-auto-close="false"
+                            role="button" aria-expanded="true">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                <i class="ti ti-truck-delivery sidebar-icon"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                Manage Orders
+                            </span>
+                        </a>
+                        <div
+                            class="dropdown-menu {{ setSidebarActive(['admin.orders.index', 'admin.kyc-settings.index']) == 'active' ? 'show' : '' }}">
+                            <div class="dropdown-menu-columns">
+                                <div class="dropdown-menu-column">
+                                    <a class="dropdown-item {{ setSidebarActive(['admin.orders.index']) }}"
+                                        href="{{ route('admin.orders.index') }}">
+                                        Orders
+                                        {{-- <span class="badge badge-sm bg-yellow-lt text-uppercase ms-auto">0</span> --}}
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endif
+
+                @if (canAccess(['payment setting']))
+                    <li class="nav-item">
+                        <a class="nav-link {{ setSidebarActive(['admin.payment-settings.index']) }}"
+                            href="{{ route('admin.payment-settings.index') }}">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                <i class="ti ti-database-dollar sidebar-icon"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                Payment Setting
+                            </span>
+                        </a>
+                    </li>
+                @endif
+
                 {{-- Profile --}}
                 <li class="nav-item">
                     <a class="nav-link {{ setSidebarActive(['admin.profile.index']) }}"

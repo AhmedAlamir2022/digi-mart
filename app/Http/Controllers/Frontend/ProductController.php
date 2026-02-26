@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\PurchaseItem;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -38,7 +39,19 @@ class ProductController extends Controller
 
         $productCount = Item::where('status', 'approved')->count();
 
-        return view('frontend.pages.products', compact('products', 'categories', 'productCount'));
+
+        $purchasedItemIds = collect(); // نعرفه الأول
+
+        if (auth()->check()) {
+            $purchasedItemIds = PurchaseItem::where('user_id', auth()->id())
+                ->whereHas('purchase', function ($q) {
+                    $q->where('status', 'completed');
+                })
+                ->pluck('item_id')
+                ->map(fn($id) => (int) $id);
+        }
+
+        return view('frontend.pages.products', compact('products', 'categories', 'productCount', 'purchasedItemIds'));
     }
 
     function show(string $slug)

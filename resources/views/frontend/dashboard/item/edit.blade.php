@@ -264,7 +264,7 @@
 
                 </div>
                 <div class="wsus__dash_order_table mt-3">
-                    <div>
+                    <div
                         <h6>Free Item</h6>
                     </div>
                     <hr>

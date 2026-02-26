@@ -176,17 +176,31 @@
                 </div>
             </div>
             <div class="product_item_footer">
-                @if (in_array($product->id, session('purchase_ids', [])))
-                    <a class="product_cart bg-warning text-white" href="javascript:;">
-                        <i class="ti ti-shopping-cart-plus"></i> <span
-                            id="cart-btn-{{ $product->id }}">{{ __('Already Purchased') }}</span>
-                    </a>
+
+                @auth
+                    @if ($purchasedItemIds->contains((int) $product->id))
+                        <a class="product_cart bg-warning text-white" href="javascript:;"
+                            style="pointer-events:none; cursor:not-allowed;">
+                            <i class="ti ti-check"></i>
+                            <span>
+                                {{ __('Already Purchased') }}
+                            </span>
+                        </a>
+                    @else
+                        <a class="product_cart add-cart" data-id="{{ $product->id }}" href="javascript:;">
+                            <i class="ti ti-shopping-cart-plus"></i>
+                            <span>
+                                {{ __('Add to cart') }}
+                            </span>
+                        </a>
+                    @endif
                 @else
-                    <a class="product_cart add-cart" data-id="{{ $product->id }}" href="javascript:;">
-                        <i class="ti ti-shopping-cart-plus"></i> <span
-                            id="cart-btn-{{ $product->id }}">{{ __('Add to cart') }}</span>
+                    <a href="{{ route('login') }}" class="product_cart">
+                        <i class="ti ti-shopping-cart-plus"></i>
+                        <span>{{ __('Add to cart') }}</span>
                     </a>
-                @endif
+                @endauth
+
             </div>
         </div>
     </div>

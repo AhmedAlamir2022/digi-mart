@@ -3,6 +3,7 @@
 use App\Models\CartItem;
 use App\Models\Item;
 use App\Models\KycVerification;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -123,29 +124,57 @@ if (!function_exists('formatSize')) {
 }
 
 /** get item status count */
-if(!function_exists('getItemStatusCount')) {
-    function getItemStatusCount(string $status) : int
+if (!function_exists('getItemStatusCount')) {
+    function getItemStatusCount(string $status): int
     {
         return Item::select('status')->where('status', $status)->count();
     }
 }
 
 /** get item status count */
-if(!function_exists('getFileSize')) {
-    function getFileSize(string $path) : string
+if (!function_exists('getFileSize')) {
+    function getFileSize(string $path): string
     {
         try {
-            return formatSize(File::size(storage_path('app/private/'.$path)));
-        }catch (\Exception $e) {
+            return formatSize(File::size(storage_path('app/private/' . $path)));
+        } catch (\Exception $e) {
             return '0B';
         }
     }
 }
 
 /** get item status count */
-if(!function_exists('getCartCount')) {
-    function getCartCount() : int
+if (!function_exists('getCartCount')) {
+    function getCartCount(): int
     {
         return CartItem::where('user_id', user()->id)->count();
+    }
+}
+
+/** get item status count */
+if (!function_exists('getCartTotal')) {
+    function getCartTotal(): int | float
+    {
+
+        $total = 0;
+
+        $cartItems = CartItem::with('item')->where('user_id', user()->id)->get();
+        foreach ($cartItems as $cartItem) {
+            if ($cartItem->item->discount_price > 0) {
+                $total += $cartItem->item->discount_price;
+            } else {
+                $total += $cartItem->item->price;
+            }
+        }
+
+        return $total;
+    }
+}
+
+/** get item status count */
+if (!function_exists('getCartItems')) {
+    function getCartItems(): Collection
+    {
+        return CartItem::where('user_id', user()->id)->get();
     }
 }

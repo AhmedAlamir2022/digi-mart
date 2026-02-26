@@ -119,7 +119,7 @@
                         {{ __('Continue Shopping') }}
                     </a>
                     @if (getCartCount() > 0)
-                        <a href="" class="btn btn-main flx-align gap-2 btn-lg">
+                        <a href="{{ route('checkout.index') }}" class="btn btn-main flx-align gap-2 btn-lg">
                             {{ __('Next') }}
                             <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span>
                         </a>

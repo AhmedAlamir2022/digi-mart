@@ -30,33 +30,13 @@
 
             @if (isAuthor())
                 <li class="sidebar-list__item">
-                    <a href="{{ route('user.items.index') }}"
-                        class="sidebar-list__link ">
+                    <a href="{{ route('user.items.index') }}" class="sidebar-list__link ">
                         <span class="sidebar-list__icon">
                             <i class="ti ti-clipboard-list"></i>
                         </span>
                         <span class="text">My Items</span>
                     </a>
                 </li>
-            @endif
-            {{-- <li class="sidebar-list__item">
-                <a href="{{ route('orders.index') }}" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <i class="ti ti-basket-check"></i>
-                    </span>
-                    <span class="text">Purchases</span>
-                </a>
-            </li> --}}
-
-            {{-- <li class="sidebar-list__item">
-                <a href="{{ route('transactions.index') }}" class="sidebar-list__link">
-                    <span class="sidebar-list__icon">
-                        <i class="ti ti-transaction-dollar"></i>
-                    </span>
-                    <span class="text">Transactions</span>
-                </a>
-            </li> --}}
-            {{-- @if (isAuthor())
                 <li class="sidebar-list__item">
                     <a href="{{ route('sales.index') }}" class="sidebar-list__link">
                         <span class="sidebar-list__icon">
@@ -65,17 +45,34 @@
                         <span class="text">Sales</span>
                     </a>
                 </li>
-                <li class="sidebar-list__item">
+                {{-- <li class="sidebar-list__item">
                     <a href="{{ route('withdraws.index') }}" class="sidebar-list__link">
                         <span class="sidebar-list__icon">
                             <i class="ti ti-receipt-dollar"></i>
                         </span>
                         <span class="text">Withdraws</span>
                     </a>
+                </li> --}}
+            @else
+                <li class="sidebar-list__item">
+                    <a href="{{ route('orders.index') }}" class="sidebar-list__link">
+                        <span class="sidebar-list__icon">
+                            <i class="ti ti-basket-check"></i>
+                        </span>
+                        <span class="text">Purchases</span>
+                    </a>
                 </li>
-            @endif --}}
 
-            {{-- <li class="sidebar-list__item">
+                <li class="sidebar-list__item">
+                    <a href="{{ route('transactions.index') }}" class="sidebar-list__link">
+                        <span class="sidebar-list__icon">
+                            <i class="ti ti-transaction-dollar"></i>
+                        </span>
+                        <span class="text">Transactions</span>
+                    </a>
+                </li>
+
+                {{-- <li class="sidebar-list__item">
                 <a href="{{ route('reviews.index') }}" class="sidebar-list__link">
                     <span class="sidebar-list__icon">
                         <i class="ti ti-stars"></i>
@@ -83,6 +80,9 @@
                     <span class="text">Reviews</span>
                 </a>
             </li> --}}
+            @endif
+
+
 
             <li class="sidebar-list__item">
                 <!-- Authentication -->

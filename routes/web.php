@@ -4,8 +4,11 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\KycVerificationController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\User\CartItemController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ItemController;
+use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\PaymentController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +31,30 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('cart', [CartItemController::class, 'index'])->name('cart.index');
     Route::post('add-cart/{id}', [CartItemController::class, 'store'])->name('cart.store');
     Route::delete('delete-cart/{id}', [CartItemController::class, 'destroy'])->name('cart.destroy');
+
+    /** checkout routes */
+    Route::get('checkout', CheckoutController::class)->name('checkout.index');
+
+    /** Payment Routes */
+    Route::get('payment/completed', [PaymentController::class, 'completed'])->name('payment.completed');
+    Route::get('payment/canceled', [PaymentController::class, 'canceled'])->name('payment.canceled');
+
+    /** Paypal Routes */
+    Route::get('payment/paypal', [PaymentController::class, 'payWithPaypal'])->name('payment.paypal');
+    Route::get('payment/paypal/success', [PaymentController::class, 'paypalSuccess'])->name('payment.paypal.success');
+    Route::get('payment/paypal/cancel', [PaymentController::class, 'paypalCancel'])->name('payment.paypal.cancel');
+
+    /** Stripe Routes */
+    Route::get('payment/stripe', [PaymentController::class, 'payWithStripe'])->name('payment.stripe');
+    Route::get('payment/stripe/success', [PaymentController::class, 'stripeSuccess'])->name('payment.stripe.success');
+    Route::get('payment/stripe/cancel', [PaymentController::class, 'stripeCanceled'])->name('payment.stripe.cancel');
+
+    /** Order Routes */
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/item/{id}/download', [OrderController::class, 'itemDownload'])->name('items.download');
+    Route::get('/transactions', [OrderController::class, 'transactions'])->name('transactions.index');
+    Route::get('/sales', [OrderController::class, 'sales'])->name('sales.index');
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {
