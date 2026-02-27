@@ -9,7 +9,7 @@
     <!-- Title -->
     <title>@yield('title') -- {{ config('settings.site_name') }}</title>
     <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/images/logo/favicon-two.png">
+    <link rel="shortcut icon" href="{{ asset(config('settings.favicon')) }}">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/bootstrap.min.css') }}">

@@ -45,14 +45,14 @@
                         <span class="text">Sales</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-list__item">
+                <li class="sidebar-list__item">
                     <a href="{{ route('withdraws.index') }}" class="sidebar-list__link">
                         <span class="sidebar-list__icon">
                             <i class="ti ti-receipt-dollar"></i>
                         </span>
                         <span class="text">Withdraws</span>
                     </a>
-                </li> --}}
+                </li>
             @else
                 <li class="sidebar-list__item">
                     <a href="{{ route('orders.index') }}" class="sidebar-list__link">

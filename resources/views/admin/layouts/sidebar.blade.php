@@ -297,6 +297,36 @@
                     </li>
                 @endif
 
+                @if (canAccess(['show all withdraw requests']))
+                    <li class="nav-item">
+                        <a class="nav-link {{ setSidebarActive(['admin.withdraw-requests.index']) }}"
+                            href="{{ route('admin.withdraw-requests.index') }}">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                <i class="ti ti-credit-card sidebar-icon"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                Withdraw Requests
+                            </span>
+                        </a>
+                    </li>
+                @endif
+
+                @if (canAccess(['show withdraw methods']))
+                    <li class="nav-item">
+                        <a class="nav-link {{ setSidebarActive(['admin.withdrawal-methods.index']) }}"
+                            href="{{ route('admin.withdrawal-methods.index') }}">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                <i class="ti ti-cash-banknote sidebar-icon"></i>
+                            </span>
+                            <span class="nav-link-title">
+                                Withdraw Methods
+                            </span>
+                        </a>
+                    </li>
+                @endif
+
                 @if (canAccess(['payment setting']))
                     <li class="nav-item">
                         <a class="nav-link {{ setSidebarActive(['admin.payment-settings.index']) }}"

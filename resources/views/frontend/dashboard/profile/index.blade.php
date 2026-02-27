@@ -118,7 +118,29 @@
 
                         <!-- Payouts (Author Only) -->
                         <div class="tab-pane fade" id="payouts" role="tabpanel">
-                            <p class="text-muted">Payouts section coming soon...</p>
+                            <form action="{{ route('withdraw.info') }}" autocomplete="off" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <x-frontend.input-select name="payout_method" :label="__('Payout Method')"
+                                        class="select_2 withdraw-method">
+                                        @foreach ($withdrawMethods as $method)
+                                            <option @selected($user?->withdrawInfo?->withdraw_method_id == $method->id) value="{{ $method->id }}">
+                                                {{ $method->name }}</option>
+                                        @endforeach
+                                    </x-frontend.input-select>
+                                    <div>
+                                        @foreach ($withdrawMethods as $method)
+                                            <div
+                                                class="method-{{ $method->id }} {{ $user?->withdrawInfo?->withdraw_method_id == $method->id ? '' : 'd-none' }} alert alert-info">
+                                                {!! nl2br($method->description) !!}</div>
+                                        @endforeach
+                                    </div>
+                                    <x-frontend.text-area name="information" :label="__('Information')" :value="$user?->withdrawInfo?->information" />
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-main btn-lg"> {{ __('Update Payout') }}</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
                         <!-- Change Password -->
@@ -127,7 +149,8 @@
                                 @csrf @method('PUT')
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <x-frontend.input-text type="password" name="current_password" :label="__('Current Password')" />
+                                        <x-frontend.input-text type="password" name="current_password"
+                                            :label="__('Current Password')" />
                                     </div>
                                     <div class="col-md-6">
                                         <x-frontend.input-text type="password" name="password" :label="__('New Password')" />

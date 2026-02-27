@@ -178,3 +178,11 @@ if (!function_exists('getCartItems')) {
         return CartItem::where('user_id', user()->id)->get();
     }
 }
+
+/** currency position */
+if(!function_exists('currencyPosition')) {
+    function currencyPosition($amount) : string
+    {
+        return config('settings.currency_position') == 'left' ? config('settings.currency_icon') . $amount : $amount . config('settings.currency_icon');
+    }
+}

@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\WithdrawMethodController;
+use App\Http\Controllers\Admin\WithdrawRequestController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
@@ -84,6 +86,15 @@ Route::middleware('auth:admin')->prefix('admin')->as('admin.')->group(function (
     /** Order Routes */
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+    /** Withdrawal Methods Routes */
+    Route::resource('withdrawal-methods', WithdrawMethodController::class)->except(['show']);
+
+    /** withdraw request routes */
+    Route::get('withdraw-requests', [WithdrawRequestController::class, 'index'])->name('withdraw-requests.index');
+    Route::get('withdraw-requests/{id}/show', [WithdrawRequestController::class, 'show'])->name('withdraw-requests.show');
+    Route::put('withdraw-requests', [WithdrawRequestController::class, 'update'])->name('withdraw-requests.update');
+    Route::put('withdraw-requests/{id}/status', [WithdrawRequestController::class, 'updateStatus'])->name('withdraw-requests-status.update');
 
     /** Payment Settings Routes */
     Route::get('payment-settings', [PaymentSettingController::class, 'index'])->name('payment-settings.index');

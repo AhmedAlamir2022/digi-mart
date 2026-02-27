@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\KycVerificationController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\User\AuthorWithdrawController;
 use App\Http\Controllers\User\CartItemController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\DashboardController;
@@ -55,6 +56,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/item/{id}/download', [OrderController::class, 'itemDownload'])->name('items.download');
     Route::get('/transactions', [OrderController::class, 'transactions'])->name('transactions.index');
     Route::get('/sales', [OrderController::class, 'sales'])->name('sales.index');
+
+    /** Author Route Group */
+    Route::group(['middleware' => 'is_author'], function () {
+        Route::post('/withdraw-info', [ProfileController::class, 'withdrawInfo'])->name('withdraw.info');
+
+        Route::get('/withdraws', [AuthorWithdrawController::class, 'index'])->name('withdraws.index');
+        Route::get('/withdraws/create', [AuthorWithdrawController::class, 'create'])->name('withdraws.create');
+        Route::post('/withdraws', [AuthorWithdrawController::class, 'store'])->name('withdraws.store');
+    });
 });
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'user', 'as' => 'user.'], function () {

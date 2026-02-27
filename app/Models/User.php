@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -57,5 +58,20 @@ class User extends Authenticatable
     function products(): HasMany
     {
         return $this->hasMany(Item::class, 'author_id', 'id')->where('status', 'approved');
+    }
+
+    function withdraws(): HasMany
+    {
+        return $this->hasMany(Withdraw::class, 'author_id', 'id');
+    }
+
+    function authorSales(): HasMany
+    {
+        return $this->hasMany(AuthorSale::class, 'author_id', 'id');
+    }
+
+    function withdrawInfo() : HasOne
+    {
+        return $this->hasOne(AuthorWithdrawInformation::class, 'author_id', 'id');
     }
 }
